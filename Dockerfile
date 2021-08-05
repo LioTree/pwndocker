@@ -30,8 +30,8 @@ RUN dpkg --add-architecture i386 && \
     ltrace \
     nasm \
     wget \
-    gdb \
-    gdb-multiarch \
+    # gdb \
+    # gdb-multiarch \
     netcat \
     socat \
     git \
@@ -45,9 +45,16 @@ RUN dpkg --add-architecture i386 && \
     tzdata --fix-missing && \
     rm -rf /var/lib/apt/list/*
 
+WORKDIR /tmp
+
+RUN wget https://sourceware.org/pub/gdb/snapshots/current/gdb-weekly-12.0.50.20210805.tar.xz && \
+    tar xf gdb-weekly-12.0.50.20210805.tar.xz && \
+    cd gdb-12.0.50.20210805 && \
+    ./configure --with-python=/usr/bin/python3.8 && make -j8 && make install
+
 RUN ln -fs /usr/share/zoneinfo/$TZ /etc/localtime && \
     dpkg-reconfigure -f noninteractive tzdata
-    
+
 RUN wget https://github.com/radareorg/radare2/releases/download/4.4.0/radare2_4.4.0_amd64.deb && \
     dpkg -i radare2_4.4.0_amd64.deb && rm radare2_4.4.0_amd64.deb
 
