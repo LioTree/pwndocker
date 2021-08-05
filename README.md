@@ -1,3 +1,5 @@
+use gdb 12.0.50.20210805 to solve https://github.com/Gallopsled/pwntools/issues/1783
+
 Pwndocker
 =========
 A docker environment for pwn in ctf based on **phusion/baseimage:master-amd64**, which is a modified ubuntu 20.04 baseimage for docker
